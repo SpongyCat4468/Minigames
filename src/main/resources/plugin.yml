@@ -1,0 +1,4 @@
+name: Minigames
+version: '${project.version}'
+main: me.spongycat.minigames.Minigames
+api-version: '1.20'

@@ -1,0 +1,49 @@
+# Minigames Config
+
+Lava-Survival:
+  original-world: "world" # The name of the world where the players will get teleport back when they quit the game
+  original-world-coords:
+    x: 0
+    y: 0
+    z: 0
+  lobby: "lobby" # The name of the world where the players will get teleport into while waiting for the game to start
+  lobby-coords:
+    x: 0
+    y: 0
+    z: 0
+  game-world: "lava_survival" # The name of the world where the players will play the game in
+  game-world-coords:
+    x: 0
+    y: 0
+    z: 0
+  min-player: 2  # The minimum players required to start the game
+  max-player: 12 # The maximum players that can join in a game
+  countdown: 120 # seconds the game will wait before starting if reach minimum players needed
+  first-coords: # Lava will be filled between first and second coordinate
+    x: 0
+    y: 0
+    z: 0
+  second-coords: # Barrier will be set under the lava and removed when the lava is released
+    x: 0
+    y: 0
+    z: 0
+  building-time: 3 # how many minutes players can build before the lava start pouring down
+  starting-item:
+  # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+    - "WHITE_WOOL"
+    - "OAK_LOG"
+    - "SHEARS"
+    - "IRON_AXE"
+  item-amount: # Enter the exact order following the item above
+    - 64
+    - 32
+    - 1
+    - 1
+  pvp-enabled: false
+  reward:
+    # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+    - "NETHERITE_INGOT"
+    - "DIAMOND"
+  reward-amount: # Enter the exact order following the item above
+    - 5
+    - 32

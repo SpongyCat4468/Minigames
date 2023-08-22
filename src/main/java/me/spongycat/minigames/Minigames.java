@@ -3,6 +3,7 @@ package me.spongycat.minigames;
 import me.spongycat.minigames.commands.MinigamesCommand;
 import me.spongycat.minigames.listeners.LavaSurvivalListener;
 import me.spongycat.minigames.listeners.MinigamesGUIListener;
+import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

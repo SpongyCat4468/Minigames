@@ -55,9 +55,12 @@ public class MinigamesGUIListener implements Listener {
                 quit.setItemMeta(itemMeta1);
 
                 p.getInventory().setItem(8, quit);
+            } else if (LavaSurvivalScoreBoard.isGameRunning) {
+                p.closeInventory();
+                p.sendMessage(ChatColor.RED + "Game currently running! Please wait for the game to end!");
             } else {
                 p.closeInventory();
-                p.sendMessage(ChatColor.RED + "Lobby full! Please wait for the game to start!");
+                p.sendMessage(ChatColor.RED + "Lobby full! Please wait for the next round!");
             }
         }
     }

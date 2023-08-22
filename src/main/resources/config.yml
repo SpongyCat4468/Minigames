@@ -27,7 +27,11 @@ Lava-Survival:
     x: 0
     y: 0
     z: 0
-  building-time: 3 # how many minutes players can build before the lava start pouring down
+  third-coords: # The area between the first coords and third coords will be cleared after a game is finished
+    x: 0 # -> should be the same as the second coords x
+    y: 0 # -> should be ground level
+    z: 0 # -> should be the same as the second coords z
+  building-time: 180 # how many seconds players can build before the lava start pouring down
   starting-item:
   # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
     - "WHITE_WOOL"
@@ -40,6 +44,8 @@ Lava-Survival:
     - 1
     - 1
   pvp-enabled: false
+  drop-items-on-death: false # if set to true, players might be able to get items from last round if items aren't destroyed by lava
+  # ^ if set to false, players won't be able to get other's item by killing other players
   reward:
     # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
     - "NETHERITE_INGOT"

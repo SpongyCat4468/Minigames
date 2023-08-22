@@ -1,6 +1,7 @@
 package me.spongycat.minigames.configs;
 
 
+import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -30,6 +31,11 @@ public class LavaSurvivalConfig {
     public static int SECOND_X = findInt("Lava-Survival.second-coords.x");
     public static int SECOND_Y = findInt("Lava-Survival.second-coords.y");
     public static int SECOND_Z = findInt("Lava-Survival.second-coords.z");
+    public static int THIRD_X = findInt("Lava-Survival.third-coords.x");
+    public static int THIRD_Y = findInt("Lava-Survival.third-coords.y");
+    public static int THIRD_Z = findInt("Lava-Survival.third-coords.z");
+
+
 
     public static int COUNTDOWN = findInt("Lava-Survival.countdown");
     public static int BUILDING_TIME = findInt("Lava-Survival.building-time");
@@ -38,7 +44,7 @@ public class LavaSurvivalConfig {
     public static List<String> REWARD = findStringList("Lava-Survival.reward");
     public static List<Integer> REWARD_AMOUNT = findIntList("Lava-Survival.reward-amount");
     public static boolean CAN_PVP = findBoolean("Lava-Survival.pvp-enabled");
-
+    public static boolean DROP_ITEMS_ON_DEATH = findBoolean("Lava-Survival.drop-items-on-death");
 
 
     public static boolean findBoolean(String path) {

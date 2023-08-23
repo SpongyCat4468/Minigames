@@ -11,26 +11,70 @@ Lava-Survival:
     x: 0
     y: 0
     z: 0
-  game-world: "lava_survival" # The name of the world where the players will play the game in
-  game-world-coords:
-    x: 0
-    y: 0
-    z: 0
+  map-names: # Map names that you should add below it
+    - "map1"
+    - "map2"
+    - "map3"
+  map1: # -> Match the map names you just typed above (The map name will also be displayed in game!)
+    world: "lava_survival" # The name of the world where the players will play the game in
+    world-coords: # The coord in the world where the players will teleport to when the game start
+      x: 0
+      y: 0
+      z: 0
+    first-coords: # Lava will be filled between first and second coordinate
+      x: 0
+      y: 0
+      z: 0
+    second-coords: # Barrier will be set under the lava and removed when the lava is released
+      x: 0
+      y: 0
+      z: 0
+    third-coords: # The area between the first coords and third coords will be cleared after a game is finished
+      x: 0 # -> should be the same as the second coords x
+      y: 0 # -> should be ground level
+      z: 0 # -> should be the same as the second coords z
+
+  map2: # -> Match the map names you just typed above (The map name will also be displayed in game!)
+    world: "lava_survival"
+    world-coords:
+      x: 0
+      y: 0
+      z: 0
+    first-coords:
+      x: 0
+      y: 0
+      z: 0
+    second-coords:
+      x: 0
+      y: 0
+      z: 0
+    third-coords:
+      x: 0
+      y: 0
+      z: 0
+
+  map3: # -> Match the map names you just typed above (The map name will also be displayed in game!)
+    world: "lava_survival"
+    world-coords:
+      x: 0
+      y: 0
+      z: 0
+    first-coords:
+      x: 0
+      y: 0
+      z: 0
+    second-coords:
+      x: 0
+      y: 0
+      z: 0
+    third-coords:
+      x: 0
+      y: 0
+      z: 0
+
   min-player: 2  # The minimum players required to start the game
   max-player: 12 # The maximum players that can join in a game
   countdown: 120 # seconds the game will wait before starting if reach minimum players needed
-  first-coords: # Lava will be filled between first and second coordinate
-    x: 0
-    y: 0
-    z: 0
-  second-coords: # Barrier will be set under the lava and removed when the lava is released
-    x: 0
-    y: 0
-    z: 0
-  third-coords: # The area between the first coords and third coords will be cleared after a game is finished
-    x: 0 # -> should be the same as the second coords x
-    y: 0 # -> should be ground level
-    z: 0 # -> should be the same as the second coords z
   building-time: 180 # how many seconds players can build before the lava start pouring down
   starting-item:
   # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
@@ -53,3 +97,4 @@ Lava-Survival:
   reward-amount: # Enter the exact order following the item above
     - 5
     - 32
+  ip: "play.minigames.net" # IP that will be displayed in game

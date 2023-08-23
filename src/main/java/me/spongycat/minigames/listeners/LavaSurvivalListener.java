@@ -3,7 +3,6 @@ package me.spongycat.minigames.listeners;
 import me.spongycat.minigames.configs.LavaSurvivalConfig;
 import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,8 +1,6 @@
 package me.spongycat.minigames.configs;
 
 
-import me.spongycat.minigames.Minigames;
-import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 

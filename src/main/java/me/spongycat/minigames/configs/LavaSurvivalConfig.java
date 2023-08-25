@@ -30,18 +30,9 @@ public class LavaSurvivalConfig {
     public static List<Integer> REWARD_AMOUNT = findIntList("Lava-Survival.reward-amount");
     public static boolean CAN_PVP = findBoolean("Lava-Survival.pvp-enabled");
     public static boolean DROP_ITEMS_ON_DEATH = findBoolean("Lava-Survival.drop-items-on-death");
+    public static String IP = findString("Lava-Survival.ip");
     private static final List<String> MAP_NAMES = findStringList("Lava-Survival.map-names");
 
-    private static String pickRandomMap() {
-        List<String> mapNames = MAP_NAMES;
-        if (mapNames.isEmpty()) {
-            Bukkit.getLogger().log(Level.WARNING, "Map list cannot be empty!");
-        }
-
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(mapNames.size());
-        return mapNames.get(randomIndex);
-    }
 
     public static World GAME_WORLD;
     public static int FIRST_X;
@@ -78,6 +69,17 @@ public class LavaSurvivalConfig {
         THIRD_Z = findInt("Lava-Survival." + mapName + ".third-coords.z");
 
         return mapName;
+    }
+
+    private static String pickRandomMap() {
+        List<String> mapNames = MAP_NAMES;
+        if (mapNames.isEmpty()) {
+            Bukkit.getLogger().log(Level.WARNING, "Map list cannot be empty!");
+        }
+
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(mapNames.size());
+        return mapNames.get(randomIndex);
     }
 
 

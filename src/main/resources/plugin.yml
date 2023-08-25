@@ -1,8 +1,10 @@
 name: Minigames
 version: '${project.version}'
 main: me.spongycat.minigames.Minigames
+load: POSTWORLD
+depend: [Multiverse-Inventories]
 api-version: '1.20'
 commands:
   minigames:
-    description: Command for mingames.
+    description: Command for minigames.
     usage: /<command>

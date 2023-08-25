@@ -16,7 +16,7 @@ Lava-Survival:
     - "map2"
     - "map3"
   map1: # -> Match the map names you just typed above (The map name will also be displayed in game!)
-    world: "lava_survival" # The name of the world where the players will play the game in
+    world: "map1" # The name of the world where the players will play the game in
     world-coords: # The coord in the world where the players will teleport to when the game start
       x: 0
       y: 0
@@ -35,7 +35,7 @@ Lava-Survival:
       z: 0 # -> should be the same as the second coords z
 
   map2: # -> Match the map names you just typed above (The map name will also be displayed in game!)
-    world: "lava_survival"
+    world: "map2"
     world-coords:
       x: 0
       y: 0
@@ -54,7 +54,7 @@ Lava-Survival:
       z: 0
 
   map3: # -> Match the map names you just typed above (The map name will also be displayed in game!)
-    world: "lava_survival"
+    world: "map3"
     world-coords:
       x: 0
       y: 0

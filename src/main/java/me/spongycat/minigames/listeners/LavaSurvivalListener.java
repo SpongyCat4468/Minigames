@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,6 +22,13 @@ public class LavaSurvivalListener implements Listener {
     public void onPlayerDeathInGame(PlayerDeathEvent e) {
         if (e.getEntity().getWorld().equals(LavaSurvivalConfig.GAME_WORLD)) {
             LavaSurvivalScoreBoard.hideGameScoreBoard(e.getEntity());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDisconnect(PlayerQuitEvent e) {
+        if (e.getPlayer().getWorld().equals(LavaSurvivalConfig.GAME_WORLD)) {
+            LavaSurvivalScoreBoard.hideGameScoreBoard(e.getPlayer());
         }
     }
 

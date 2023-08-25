@@ -32,6 +32,7 @@ public class LavaSurvivalScoreBoard {
     public static boolean isFirstTimeAfterAnotherRound = false;
 
     private static List<Player> playersParticipate = new ArrayList<>();
+    private static String mapName = "";
     public static void showScoreBoard(Player p) {
         previousCurrentPlayersWaiting = currentPlayersWaiting;
         currentPlayersWaiting ++;
@@ -40,6 +41,7 @@ public class LavaSurvivalScoreBoard {
             currentPlayersWaiting = 1;
             playersWaiting.clear();
             isFirstTimeAfterAnotherRound = false;
+            mapName = LavaSurvivalConfig.rollMap();
         }
 
         ScoreboardManager manager = Bukkit.getScoreboardManager();
@@ -48,11 +50,17 @@ public class LavaSurvivalScoreBoard {
         objective = scoreboard.registerNewObjective("Lava_Survival_Scoreboard", "dummy", ChatColor.GOLD + "LAVA SURVIVAL");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score empty = objective.getScore(ChatColor.BLACK + "");
-        empty.setScore(5);
+        Score map = objective.getScore(ChatColor.GREEN + "Map: " + ChatColor.YELLOW + mapName);
+        map.setScore(7);
+
+        Score empty3 = objective.getScore(ChatColor.YELLOW + "");
+        empty3.setScore(6);
 
         Score players = objective.getScore("Players: " + ChatColor.GREEN + currentPlayersWaiting + "/" + LavaSurvivalConfig.MAX_PLAYER);
-        players.setScore(4);
+        players.setScore(5);
+
+        Score empty = objective.getScore(ChatColor.BLACK + "");
+        empty.setScore(4);
 
         Score waitingTimer = objective.getScore(ChatColor.AQUA + "Waiting for players...");
         waitingTimer.setScore(3);
@@ -60,7 +68,7 @@ public class LavaSurvivalScoreBoard {
         Score empty2 = objective.getScore("");
         empty2.setScore(2);
 
-        Score ip = objective.getScore(ChatColor.YELLOW + "varrock.apexmc.co");
+        Score ip = objective.getScore(ChatColor.YELLOW + LavaSurvivalConfig.IP);
         ip.setScore(1);
 
         p.setScoreboard(scoreboard);
@@ -86,10 +94,13 @@ public class LavaSurvivalScoreBoard {
 
         previousPlayersInGame = playersInGame;
 
-        Score empty = gameObjective.getScore(ChatColor.BLACK + "");
+        Score map = gameObjective.getScore(ChatColor.GREEN + "Map: " + ChatColor.YELLOW + mapName);
+        map.setScore(5);
+
+        Score empty = gameObjective.getScore(ChatColor.YELLOW + "");
         empty.setScore(4);
 
-        Score players = gameObjective.getScore(ChatColor.GREEN + "" + playersInGame + " players in game");
+        Score players = gameObjective.getScore(playersInGame + " players in game");
         players.setScore(3);
 
         Score empty2 = gameObjective.getScore("");
@@ -120,24 +131,26 @@ public class LavaSurvivalScoreBoard {
         ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
         Scoreboard emptyScoreboard = scoreboardManager.getNewScoreboard();
         p.setScoreboard(emptyScoreboard);
-        playersInGame -= 1;
-        playerInGame.remove(p);
-        updateGameScoreBoard();
-        Bukkit.getServer().broadcastMessage(ChatColor.BOLD + p.getDisplayName() + ChatColor.BLUE  + " has been eliminated from the game!");
-        p.setGameMode(GameMode.SPECTATOR);
 
-        World world = LavaSurvivalConfig.GAME_WORLD;
+        if (playerInGame.contains(p)) {
+            playersInGame -= 1;
+            playerInGame.remove(p);
+            updateGameScoreBoard();
+            Bukkit.getServer().broadcastMessage(ChatColor.BOLD + p.getDisplayName() + ChatColor.BLUE  + " has been eliminated from the game!");
+            p.setGameMode(GameMode.SPECTATOR);
+            World world = LavaSurvivalConfig.GAME_WORLD;
 
-        int x = LavaSurvivalConfig.GAME_WORLD_X;
-        int y = LavaSurvivalConfig.GAME_WORLD_Y;
-        int z = LavaSurvivalConfig.GAME_WORLD_Z;
+            int x = LavaSurvivalConfig.GAME_WORLD_X;
+            int y = LavaSurvivalConfig.GAME_WORLD_Y;
+            int z = LavaSurvivalConfig.GAME_WORLD_Z;
 
-        Location location = new Location(world, x, y, z);
-        p.teleport(location);
+            Location location = new Location(world, x, y, z);
+            p.teleport(location);
 
-        if (playerInGame.size() == 1 && playersInGame == 1) {
-            winner = playerInGame.get(0);
-            endGame();
+            if (playerInGame.size() == 1 && playersInGame == 1) {
+                winner = playerInGame.get(0);
+                endGame();
+            }
         }
     }
 
@@ -154,12 +167,12 @@ public class LavaSurvivalScoreBoard {
     public static void updateGameScoreBoard() {
         playersInGame = playerInGame.size();
         for (Player p : playerInGame) {
-            removeScore(p, ChatColor.GREEN + "" + previousPlayersInGame + " players in game", gameObjective);
+            removeScore(p, gameObjective);
         }
         previousPlayersInGame = playersInGame;
 
         for (Player player : playerInGame) {
-            addGameScore(player, ChatColor.GREEN + "" + previousPlayersInGame + " players in game");
+            addGameScore(player, playersInGame + " players in game");
         }
     }
     public static void removeScore(Player player, String scoreName) {
@@ -172,13 +185,18 @@ public class LavaSurvivalScoreBoard {
             scoreboard.resetScores(scoreName); // Remove the score from the scoreboard
         }
     }
-    public static void removeScore(Player player, String scoreName, Objective objective) {
+    public static void removeScore(Player player, Objective objective) {
         Scoreboard scoreboard = player.getScoreboard();
 
         if (objective != null) {
-            Score score = objective.getScore(scoreName);
-            score.setScore(0); // Set the score to 0 or any other value you prefer
-            scoreboard.resetScores(scoreName); // Remove the score from the scoreboard
+            for (String entry : scoreboard.getEntries()) {
+            Score score = objective.getScore(entry);
+
+            // Check if the score's value is 3
+            if (score.getScore() == 3) {
+                scoreboard.resetScores(entry);
+            }
+        }
         }
     }
 
@@ -188,7 +206,7 @@ public class LavaSurvivalScoreBoard {
 
         if (objective != null) {
             Score score = objective.getScore(scoreName);
-            score.setScore(4);
+            score.setScore(5);
         }
     }
     public static void addGameScore(Player player, String scoreName) {
@@ -345,6 +363,8 @@ public class LavaSurvivalScoreBoard {
         isGameRunning = true;
         playersParticipate.addAll(playerInGame);
 
+        updateGameScoreBoard();
+
         CommandSender sender = Bukkit.getConsoleSender();
         String command;
 
@@ -382,18 +402,20 @@ public class LavaSurvivalScoreBoard {
             }
         }
 
-        int BminX = LavaSurvivalConfig.FIRST_X;
-        int BminY = LavaSurvivalConfig.FIRST_Y - 1;
-        int BminZ = LavaSurvivalConfig.FIRST_Z;
-        int BmaxX = LavaSurvivalConfig.SECOND_X;
-        int BmaxY = LavaSurvivalConfig.SECOND_Y - 1;
-        int BmaxZ = LavaSurvivalConfig.SECOND_Z;
-        World Bworld = LavaSurvivalConfig.GAME_WORLD;
+        minY = LavaSurvivalConfig.FIRST_Y - 1;
+        maxY = LavaSurvivalConfig.SECOND_Y - 1;
+
+        int BminX = AMINX;
+        int BminY = findMin(minY, maxY);
+        int BminZ = AMINZ;
+        int BmaxX = AMAXX;
+        int BmaxY = findMax(minY, maxY);
+        int BmaxZ = AMAXZ;
 
         for (int x = BminX; x <= BmaxX; x++) {
             for (int y = BminY; y <= BmaxY; y++) {
                 for (int z = BminZ; z <= BmaxZ; z++) {
-                    Location currentLocation = new Location(Bworld, x, y, z);
+                    Location currentLocation = new Location(world, x, y, z);
                     currentLocation.getBlock().setType(Material.BARRIER);
                 }
             }
@@ -403,6 +425,8 @@ public class LavaSurvivalScoreBoard {
 
         for (Player player : playerInGame) {
             player.setHealth(20);
+            player.setFoodLevel(20);
+            player.setSaturation(20.0f);
         }
 
         int durationInSeconds = LavaSurvivalConfig.BUILDING_TIME; // Set the duration for which to display the action bar
@@ -435,7 +459,7 @@ public class LavaSurvivalScoreBoard {
                     for (int x = BminX; x <= BmaxX; x++) {
                         for (int y = BminY; y <= BmaxY; y++) {
                             for (int z = BminZ; z <= BmaxZ; z++) {
-                                Location currentLocation = new Location(Bworld, x, y, z);
+                                Location currentLocation = new Location(world, x, y, z);
                                 currentLocation.getBlock().setType(Material.AIR);
                             }
                         }

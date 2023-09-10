@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MinigamesGUI {
     public static Inventory inv;
     public static ItemStack lava_bucket;
+    public static ItemStack sumo;
 
 
     public static void registerGUI() {
@@ -24,10 +25,17 @@ public class MinigamesGUI {
     // You can call this whenever you want to put the items in
     public static void initializeItems() {
         lava_bucket = new ItemStack(Material.LAVA_BUCKET);
-        ItemMeta itemMeta = lava_bucket.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GOLD + "Lava Survival");
-        lava_bucket.setItemMeta(itemMeta);
+        ItemMeta lavaMeta = lava_bucket.getItemMeta();
+        lavaMeta.setDisplayName(ChatColor.GOLD + "Lava Survival");
+        lava_bucket.setItemMeta(lavaMeta);
+
+        sumo = new ItemStack(Material.SLIME_BALL);
+        ItemMeta sumoMeta = sumo.getItemMeta();
+        sumoMeta.setDisplayName(ChatColor.GREEN + "Chaos Sumo");
+        sumo.setItemMeta(sumoMeta);
+
         inv.setItem(0, lava_bucket);
+        inv.setItem(1, sumo);
     }
 
 

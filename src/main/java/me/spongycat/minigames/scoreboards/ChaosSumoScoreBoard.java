@@ -1,12 +1,14 @@
 package me.spongycat.minigames.scoreboards;
 
-import me.spongycat.minigames.configs.LavaSurvivalConfig;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import me.spongycat.minigames.configs.ChaosSumoConfig;
+import me.spongycat.minigames.items.CustomStaffItem;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
@@ -15,7 +17,7 @@ import java.util.List;
 
 import static me.spongycat.minigames.Minigames.plugin;
 
-public class LavaSurvivalScoreBoard {
+public class ChaosSumoScoreBoard {
     public static int currentPlayersWaiting = 0;
     private static Scoreboard scoreboard;
     private static Objective objective;
@@ -40,13 +42,13 @@ public class LavaSurvivalScoreBoard {
             currentPlayersWaiting = 1;
             playersWaiting.clear();
             isFirstTimeAfterAnotherRound = false;
-            mapName = LavaSurvivalConfig.rollMap();
+            mapName = ChaosSumoConfig.rollMap();
         }
 
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         scoreboard = manager.getNewScoreboard();
 
-        objective = scoreboard.registerNewObjective("Lava_Survival_Scoreboard", "dummy", ChatColor.GOLD + "LAVA SURVIVAL");
+        objective = scoreboard.registerNewObjective("Chaos_Sumo_Scoreboard", "dummy", ChatColor.GREEN + "CHAOS SUMO");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Score map = objective.getScore(ChatColor.GREEN + "Map: " + ChatColor.YELLOW + mapName);
@@ -55,7 +57,7 @@ public class LavaSurvivalScoreBoard {
         Score empty3 = objective.getScore(ChatColor.YELLOW + "");
         empty3.setScore(6);
 
-        Score players = objective.getScore("Players: " + ChatColor.GREEN + currentPlayersWaiting + "/" + LavaSurvivalConfig.MAX_PLAYER);
+        Score players = objective.getScore("Players: " + ChatColor.GREEN + currentPlayersWaiting + "/" + ChaosSumoConfig.MAX_PLAYER);
         players.setScore(5);
 
         Score empty = objective.getScore(ChatColor.BLACK + "");
@@ -67,7 +69,7 @@ public class LavaSurvivalScoreBoard {
         Score empty2 = objective.getScore("");
         empty2.setScore(2);
 
-        Score ip = objective.getScore(ChatColor.YELLOW + LavaSurvivalConfig.IP);
+        Score ip = objective.getScore(ChatColor.YELLOW + ChaosSumoConfig.IP);
         ip.setScore(1);
 
         p.setScoreboard(scoreboard);
@@ -75,7 +77,7 @@ public class LavaSurvivalScoreBoard {
             playersWaiting.add(p);
         }
 
-        if (currentPlayersWaiting == LavaSurvivalConfig.MIN_PLAYER) {
+        if (currentPlayersWaiting == ChaosSumoConfig.MIN_PLAYER) {
             for (Player player : playersWaiting) {
                 startTimer(player);
             }
@@ -88,7 +90,7 @@ public class LavaSurvivalScoreBoard {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         gameScoreboard = manager.getNewScoreboard();
 
-        gameObjective = gameScoreboard.registerNewObjective("Lava_Survival_Game_Scoreboard", "dummy", ChatColor.GOLD + "LAVA SURVIVAL");
+        gameObjective = gameScoreboard.registerNewObjective("Chaos_Sumo_Game_Scoreboard", "dummy", ChatColor.GREEN + "CHAOS SUMO");
         gameObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Score map = gameObjective.getScore(ChatColor.GREEN + "Map: " + ChatColor.YELLOW + mapName);
@@ -103,7 +105,7 @@ public class LavaSurvivalScoreBoard {
         Score empty2 = gameObjective.getScore("");
         empty2.setScore(2);
 
-        Score ip = gameObjective.getScore(ChatColor.YELLOW + LavaSurvivalConfig.IP);
+        Score ip = gameObjective.getScore(ChatColor.YELLOW + ChaosSumoConfig.IP);
         ip.setScore(1);
 
         p.setScoreboard(gameScoreboard);
@@ -134,11 +136,11 @@ public class LavaSurvivalScoreBoard {
             updateGameScoreBoard();
             Bukkit.getServer().broadcastMessage(ChatColor.BOLD + p.getDisplayName() + ChatColor.BLUE  + " has been eliminated from the game!");
             p.setGameMode(GameMode.SPECTATOR);
-            World world = LavaSurvivalConfig.GAME_WORLD;
+            World world = ChaosSumoConfig.GAME_WORLD;
 
-            int x = LavaSurvivalConfig.GAME_WORLD_X;
-            int y = LavaSurvivalConfig.GAME_WORLD_Y;
-            int z = LavaSurvivalConfig.GAME_WORLD_Z;
+            int x = ChaosSumoConfig.GAME_WORLD_X;
+            int y = ChaosSumoConfig.GAME_WORLD_Y;
+            int z = ChaosSumoConfig.GAME_WORLD_Z;
 
             Location location = new Location(world, x, y, z);
             p.teleport(location);
@@ -148,15 +150,18 @@ public class LavaSurvivalScoreBoard {
                 endGame();
             }
         }
+        for (PotionEffect potionEffect : p.getActivePotionEffects()) {
+            p.removePotionEffect(potionEffect.getType());
+        }
     }
 
     public static void updateScoreBoard() {
         for (Player p : playersWaiting) {
-            removeScore(p, "Players: " + ChatColor.GREEN + previousCurrentPlayersWaiting + "/" + LavaSurvivalConfig.MAX_PLAYER);
+            removeScore(p, "Players: " + ChatColor.GREEN + previousCurrentPlayersWaiting + "/" + ChaosSumoConfig.MAX_PLAYER);
         }
         previousCurrentPlayersWaiting = currentPlayersWaiting;
         for (Player p : playersWaiting) {
-            addScore(p, "Players: " + ChatColor.GREEN + previousCurrentPlayersWaiting + "/" + LavaSurvivalConfig.MAX_PLAYER);
+            addScore(p, "Players: " + ChatColor.GREEN + previousCurrentPlayersWaiting + "/" + ChaosSumoConfig.MAX_PLAYER);
         }
     }
 
@@ -213,7 +218,7 @@ public class LavaSurvivalScoreBoard {
     }
 
     public static void startTimer(Player player) {
-        int x = LavaSurvivalConfig.COUNTDOWN;
+        int x = ChaosSumoConfig.COUNTDOWN;
 
         // Create a BukkitRunnable to run the timer
         new BukkitRunnable() {
@@ -224,7 +229,7 @@ public class LavaSurvivalScoreBoard {
                 newScore = ChatColor.AQUA + "Starting in " + formatTime(currentValue);
                 updateTimer(player, previousScore, newScore);
 
-                boolean reachMinPlayer = currentPlayersWaiting >= LavaSurvivalConfig.MIN_PLAYER;
+                boolean reachMinPlayer = currentPlayersWaiting >= ChaosSumoConfig.MIN_PLAYER;
                 if (currentValue >= 1 && reachMinPlayer) {
                     previousScore = ChatColor.AQUA + "Starting in " + formatTime(currentValue);
 
@@ -237,13 +242,13 @@ public class LavaSurvivalScoreBoard {
                         displayTitle(player, newDisplayTitle, 1);
                     } else if (currentValue == 0) {
                         cancel();
-                        if (!(currentPlayersWaiting < LavaSurvivalConfig.MIN_PLAYER)) {
+                        if (!(currentPlayersWaiting < ChaosSumoConfig.MIN_PLAYER)) {
                             startGameGroup(playersWaiting);
-                            World world = LavaSurvivalConfig.GAME_WORLD;
+                            World world = ChaosSumoConfig.GAME_WORLD;
 
-                            int x = LavaSurvivalConfig.GAME_WORLD_X;
-                            int y = LavaSurvivalConfig.GAME_WORLD_Y;
-                            int z = LavaSurvivalConfig.GAME_WORLD_Z;
+                            int x = ChaosSumoConfig.GAME_WORLD_X;
+                            int y = ChaosSumoConfig.GAME_WORLD_Y;
+                            int z = ChaosSumoConfig.GAME_WORLD_Z;
 
                             Location location = new Location(world, x, y, z);
 
@@ -265,7 +270,7 @@ public class LavaSurvivalScoreBoard {
                         cancel();
                     } else {
                         cancel();
-                        if (!(currentPlayersWaiting < LavaSurvivalConfig.MIN_PLAYER)) {
+                        if (!(currentPlayersWaiting < ChaosSumoConfig.MIN_PLAYER)) {
                             startGameGroup(playersWaiting);
                         }
                     }
@@ -283,7 +288,7 @@ public class LavaSurvivalScoreBoard {
 
     public static void updateTimer(Player player, String previousScoreName, String newScoreName) {
         Scoreboard scoreboard = player.getScoreboard();
-        Objective objective = scoreboard.getObjective("Lava_Survival_Scoreboard"); // Replace with your objective name
+        Objective objective = scoreboard.getObjective("Chaos_Sumo_Scoreboard"); // Replace with your objective name
 
         if (objective != null) {
             Score waitingTimer = objective.getScore(ChatColor.AQUA + "Waiting for players...");
@@ -298,7 +303,7 @@ public class LavaSurvivalScoreBoard {
 
     public static void resetTimer(Player player) {
         Scoreboard scoreboard = player.getScoreboard();
-        Objective objective = scoreboard.getObjective("Lava_Survival_Scoreboard"); // Replace with your objective name
+        Objective objective = scoreboard.getObjective("Chaos_Sumo_Scoreboard"); // Replace with your objective name
 
         if (objective != null) {
             Score waitingTimer = objective.getScore(ChatColor.AQUA + "Waiting for players...");
@@ -319,37 +324,21 @@ public class LavaSurvivalScoreBoard {
     }
 
     public static void initialGameForPlayers(Player player) {
-        World world = LavaSurvivalConfig.GAME_WORLD;
+        World world = ChaosSumoConfig.GAME_WORLD;
 
-        int x = LavaSurvivalConfig.GAME_WORLD_X;
-        int y = LavaSurvivalConfig.GAME_WORLD_Y;
-        int z = LavaSurvivalConfig.GAME_WORLD_Z;
+        int x = ChaosSumoConfig.GAME_WORLD_X;
+        int y = ChaosSumoConfig.GAME_WORLD_Y;
+        int z = ChaosSumoConfig.GAME_WORLD_Z;
 
         Location location = new Location(world, x, y, z);
         player.teleport(location);
 
-        List<ItemStack> initialItems = new ArrayList<>();
-
-        List<Material> initialMaterials = new ArrayList<>();
-
-        List<Integer> initialAmounts = LavaSurvivalConfig.STARTING_ITEM_AMOUNT;
-
-        for (String ID : LavaSurvivalConfig.STARTING_ITEM) {
-            initialMaterials.add(Material.getMaterial(ID));
-        }
-
-        for (int i = 0; i < initialMaterials.size(); i++) {
-            Material material = initialMaterials.get(i);
-            int amount = initialAmounts.get(i);
-
-            ItemStack itemStack = new ItemStack(material, amount);
-            initialItems.add(itemStack);
-        }
-
         player.getInventory().clear();
-        for (ItemStack itemStack : initialItems) {
-            player.getInventory().addItem(itemStack);
-        }
+        player.getInventory().addItem(
+                CustomStaffItem.CHAOS_STAFF,
+                CustomStaffItem.TELEPORT_STAFF,
+                CustomStaffItem.SHALL_NOT_PASS_STAFF
+        );
 
         showInGameScoreBoard(player);
     }
@@ -361,22 +350,16 @@ public class LavaSurvivalScoreBoard {
         updateGameScoreBoard();
 
         CommandSender sender = Bukkit.getConsoleSender();
-        String command;
-
-        if (!LavaSurvivalConfig.DROP_ITEMS_ON_DEATH) {
-            command = "mv gamerule keepInventory true " + LavaSurvivalConfig.GAME_WORLD.getName();
-        } else {
-            command = "mv gamerule keepInventory false " + LavaSurvivalConfig.GAME_WORLD.getName();
-        }
+        String command = "mv gamerule keepInventory true" + ChaosSumoConfig.GAME_WORLD.getName();
         Bukkit.dispatchCommand(sender, command);
 
-        int minX = LavaSurvivalConfig.FIRST_X;
-        int minY = LavaSurvivalConfig.FIRST_Y;
-        int minZ = LavaSurvivalConfig.FIRST_Z;
-        int maxX = LavaSurvivalConfig.SECOND_X;
-        int maxY = LavaSurvivalConfig.SECOND_Y;
-        int maxZ = LavaSurvivalConfig.SECOND_Z;
-        World world = LavaSurvivalConfig.GAME_WORLD;
+        int minX = ChaosSumoConfig.FIRST_X;
+        int minY = ChaosSumoConfig.FIRST_Y;
+        int minZ = ChaosSumoConfig.FIRST_Z;
+        int maxX = ChaosSumoConfig.SECOND_X;
+        int maxY = ChaosSumoConfig.SECOND_Y;
+        int maxZ = ChaosSumoConfig.SECOND_Z;
+        World world = ChaosSumoConfig.GAME_WORLD;
 
         int AMAXX = findMax(maxX, minX);
         int AMAXY = findMax(maxY, minY);
@@ -391,81 +374,20 @@ public class LavaSurvivalScoreBoard {
                 for (int y = AMINY; y <= AMAXY; y++) {
                     for (int z = AMINZ; z <= AMAXZ; z++) {
                         Location currentLocation = new Location(world, x, y, z);
-                        currentLocation.getBlock().setType(Material.LAVA);
+                        currentLocation.getBlock().setType(ChaosSumoConfig.FILLING_BLOCK);
                     }
                 }
             }
         }
-
-        minY = LavaSurvivalConfig.FIRST_Y - 1;
-        maxY = LavaSurvivalConfig.SECOND_Y - 1;
-
-        int BminX = AMINX;
-        int BminY = findMin(minY, maxY);
-        int BminZ = AMINZ;
-        int BmaxX = AMAXX;
-        int BmaxY = findMax(minY, maxY);
-        int BmaxZ = AMAXZ;
-
-        for (int x = BminX; x <= BmaxX; x++) {
-            for (int y = BminY; y <= BmaxY; y++) {
-                for (int z = BminZ; z <= BmaxZ; z++) {
-                    Location currentLocation = new Location(world, x, y, z);
-                    currentLocation.getBlock().setType(Material.BARRIER);
-                }
-            }
-        }
-
-        int delayInSeconds = LavaSurvivalConfig.BUILDING_TIME;
 
         for (Player player : playerInGame) {
             player.setHealth(20);
             player.setFoodLevel(20);
             player.setSaturation(20.0f);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, -1, 5));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, -1, 5));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, -1, 5));
         }
-
-        int durationInSeconds = LavaSurvivalConfig.BUILDING_TIME; // Set the duration for which to display the action bar
-
-        new BukkitRunnable() {
-            int timeLeft = durationInSeconds;
-
-            @Override
-            public void run() {
-                if (timeLeft > 0) {
-                    for (Player player : playerInGame) {
-                        sendActionBar(player,ChatColor.AQUA + formatTime(timeLeft) + " left till lava release");
-                    }
-                    timeLeft--;
-                } else {
-                    cancel(); // Cancel the task when the time is up
-                    for (Player player : playerInGame) {
-                        sendActionBar(player, "");
-                    }
-                }
-            }
-        }.runTaskTimer(plugin, 0, 20); // Start after 1 second (20 ticks), repeat every 1 second (20 ticks)
-
-        // Schedule a delayed task
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                // Call your function here
-                if (isGameRunning) {
-                    for (int x = BminX; x <= BmaxX; x++) {
-                        for (int y = BminY; y <= BmaxY; y++) {
-                            for (int z = BminZ; z <= BmaxZ; z++) {
-                                Location currentLocation = new Location(world, x, y, z);
-                                currentLocation.getBlock().setType(Material.AIR);
-                            }
-                        }
-                    }
-                    for (Player player : playerInGame) {
-                        displayTitle(player, ChatColor.GOLD + "Lava has been released!", 5);
-                        player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.0f, 1.0f);
-                    }
-                }
-            }
-        }.runTaskLater(plugin, delayInSeconds * 20L);
     }
 
     private static int findMax(int num1, int num2) {
@@ -480,13 +402,13 @@ public class LavaSurvivalScoreBoard {
         isGameRunning = false;
         isFirstTimeAfterAnotherRound = true;
 
-        int AmaxX = LavaSurvivalConfig.FIRST_X;
-        int AmaxY = LavaSurvivalConfig.FIRST_Y;
-        int AmaxZ = LavaSurvivalConfig.FIRST_Z;
-        int AminX = LavaSurvivalConfig.THIRD_X;
-        int AminY = LavaSurvivalConfig.THIRD_Y;
-        int AminZ = LavaSurvivalConfig.THIRD_Z;
-        World Aworld = LavaSurvivalConfig.GAME_WORLD;
+        int AmaxX = ChaosSumoConfig.FIRST_X;
+        int AmaxY = ChaosSumoConfig.FIRST_Y;
+        int AmaxZ = ChaosSumoConfig.FIRST_Z;
+        int AminX = ChaosSumoConfig.SECOND_X;
+        int AminY = ChaosSumoConfig.SECOND_Y;
+        int AminZ = ChaosSumoConfig.SECOND_Z;
+        World Aworld = ChaosSumoConfig.GAME_WORLD;
 
         int MAXX = findMax(AmaxX, AminX);
         int MAXY = findMax(AmaxY, AminY);
@@ -500,7 +422,7 @@ public class LavaSurvivalScoreBoard {
             for (int y = MINY; y <= MAXY; y++) {
                 for (int z = MINZ; z <= MAXZ; z++) {
                     Location currentLocation = new Location(Aworld, x, y, z);
-                    currentLocation.getBlock().setType(Material.AIR);
+                    currentLocation.getBlock().setType(ChaosSumoConfig.FILLING_BLOCK);
                 }
             }
         }
@@ -509,9 +431,9 @@ public class LavaSurvivalScoreBoard {
 
         List<Material> rewardMaterial = new ArrayList<>();
 
-        List<Integer> rewardAmount = LavaSurvivalConfig.REWARD_AMOUNT;
+        List<Integer> rewardAmount = ChaosSumoConfig.REWARD_AMOUNT;
 
-        for (String ID : LavaSurvivalConfig.REWARD) {
+        for (String ID : ChaosSumoConfig.REWARD) {
             rewardMaterial.add(Material.getMaterial(ID));
         }
 
@@ -524,10 +446,10 @@ public class LavaSurvivalScoreBoard {
         }
 
         for (Player player : playersParticipate) {
-            World original_world = LavaSurvivalConfig.ORIGINAL_WORLD;
-            int x = LavaSurvivalConfig.ORIGINAL_WORLD_X;
-            int y = LavaSurvivalConfig.ORIGINAL_WORLD_Y;
-            int z = LavaSurvivalConfig.ORIGINAL_WORLD_Z;
+            World original_world = ChaosSumoConfig.ORIGINAL_WORLD;
+            int x = ChaosSumoConfig.ORIGINAL_WORLD_X;
+            int y = ChaosSumoConfig.ORIGINAL_WORLD_Y;
+            int z = ChaosSumoConfig.ORIGINAL_WORLD_Z;
 
             Location location = new Location(original_world, x, y, z);
             player.teleport(location);
@@ -538,7 +460,7 @@ public class LavaSurvivalScoreBoard {
             winner.getInventory().addItem(itemStack);
         }
 
-        for (String config : LavaSurvivalConfig.REWARD_COMMANDS) {
+        for (String config : ChaosSumoConfig.REWARD_COMMANDS) {
             boolean isEmpty = config.isEmpty() || config.isBlank();
             if (!isEmpty) {
                 String playerName = winner.getName();
@@ -550,7 +472,7 @@ public class LavaSurvivalScoreBoard {
             }
         }
 
-        Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "The winner of the lava survival is: " + ChatColor.BOLD + winner.getDisplayName() + ChatColor.RESET+ "!");
+        Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "The winner of the chaos sumo is: " + ChatColor.BOLD + winner.getDisplayName() + ChatColor.RESET+ "!");
         playerInGame.clear();
         playersParticipate.clear();
         playersInGame = 0;
@@ -560,10 +482,5 @@ public class LavaSurvivalScoreBoard {
     private static void displayTitle(Player player, String titleText, int delaySeconds) {
         // Set the title text and timings
         player.sendTitle(titleText, "", 5, (20 * delaySeconds) - 10, 5); // Title, Subtitle, fadeIn, stay, fadeOut
-    }
-
-    // Utility method to send an action bar message to a player
-    private static void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 }

@@ -104,3 +104,49 @@ Lava-Survival:
     # "give %player% diamond 1"
     -
   ip: "play.minigames.net" # IP that will be displayed in game
+
+Chaos-Sumo:
+  min-player: 2
+  max-player: 12
+  countdown: 120
+  original-world: "world"
+  original-world-coords:
+    x: 0
+    y: 0
+    z: 0
+  lobby: "lobby"
+  lobby-coords:
+    x: 0
+    y: 0
+    z: 0
+  map-names:
+    - "map1"
+  map1:
+    world: "map1"
+    world-coords:
+      x: 0
+      y: 0
+      z: 0
+    first-coords: # the area between first coords and second coords will be filled with the blocks specified below
+      x: 0
+      y: 0
+      z: 0
+    second-coords:
+      x: 0
+      y: 0
+      z: 0
+    filling-block: "GLASS" # use bukkit block IDs, recommend low blast resistance blocks like glass, netherrack, snow
+  reward:
+    # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+    - "NETHERITE_INGOT"
+    - "DIAMOND"
+  reward-amount: # Enter the exact order following the item above
+    - 5
+    - 32
+  reward-commands: # Enter a list of command that you want to execute in order to give the players the award
+    # Available placeholders: %player%
+    # If you don't need to execute any command, just leave it empty
+    # ex.
+    # "give %player% diamond 1"
+    -
+  ip: "play.minigames.net" # IP that will be displayed in game

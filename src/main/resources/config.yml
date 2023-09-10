@@ -135,7 +135,7 @@ Chaos-Sumo:
       x: 0
       y: 0
       z: 0
-    filling-block: "GLASS" # use bukkit block IDs, recommend low blast resistance blocks like glass, netherrack, snow
+  filling-block: "GLASS" # use bukkit block IDs, recommend low blast resistance blocks like glass, netherrack, snow
   reward:
     # Please enter valid material ID (All the material ID is in https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
     - "NETHERITE_INGOT"

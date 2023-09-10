@@ -1,8 +1,10 @@
 package me.spongycat.minigames;
 
 import me.spongycat.minigames.commands.MinigamesCommand;
+import me.spongycat.minigames.listeners.ChaosSumoListener;
 import me.spongycat.minigames.listeners.LavaSurvivalListener;
 import me.spongycat.minigames.listeners.MinigamesGUIListener;
+import me.spongycat.minigames.scoreboards.ChaosSumoScoreBoard;
 import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -27,9 +29,11 @@ public final class Minigames extends JavaPlugin {
             this.saveDefaultConfig();
             Bukkit.getPluginManager().registerEvents(new LavaSurvivalListener(), this);
             Bukkit.getPluginManager().registerEvents(new MinigamesGUIListener(), this);
+            Bukkit.getPluginManager().registerEvents(new ChaosSumoListener(), this);
             this.getCommand("minigames").setExecutor(new MinigamesCommand());
             plugin = this;
             LavaSurvivalScoreBoard.isFirstTimeAfterAnotherRound = true;
+            ChaosSumoScoreBoard.isFirstTimeAfterAnotherRound = true;
             getLogger().log(Level.INFO, "Minigame plugin initialized!");
         } else {
             getLogger().warning("Required plugin is not present or not enabled!");

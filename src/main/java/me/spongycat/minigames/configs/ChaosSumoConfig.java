@@ -18,8 +18,8 @@ public class ChaosSumoConfig {
     public static int ORIGINAL_WORLD_Z = findInt("Chaos-Sumo.original-world-coords.z");
     public static World LOBBY = Bukkit.getWorld(findString("Chaos-Sumo.lobby"));
     public static int LOBBY_X = findInt("Chaos-Sumo.lobby-coords.x");
-    public static int LOBBY_Y = findInt("Chaos-Sumo.lobby-coords.x");
-    public static int LOBBY_Z = findInt("Chaos-Sumo.lobby-coords.x");
+    public static int LOBBY_Y = findInt("Chaos-Sumo.lobby-coords.y");
+    public static int LOBBY_Z = findInt("Chaos-Sumo.lobby-coords.z");
     public static int MIN_PLAYER = findInt("Chaos-Sumo.min-player");
     public static int MAX_PLAYER = findInt("Chaos-Sumo.max-player");
     public static int COUNTDOWN = findInt("Chaos-Sumo.countdown");
@@ -43,7 +43,7 @@ public class ChaosSumoConfig {
 
     public static String rollMap() {
         String mapName = pickRandomMap();
-        String worldName = findString("Lava-Survival." + mapName + ".world");
+        String worldName = findString("Chaos-Sumo." + mapName + ".world");
         GAME_WORLD = Bukkit.getWorld(worldName);
 
         GAME_WORLD_X = findInt("Chaos-Sumo." + mapName + ".world-coords.x");
@@ -58,7 +58,7 @@ public class ChaosSumoConfig {
         SECOND_Y = findInt("Chaos-Sumo." + mapName + ".second-coords.y");
         SECOND_Z = findInt("Chaos-Sumo." + mapName + ".second-coords.z");
 
-        FILLING_BLOCK = Material.getMaterial(findString("Chaos-Sumo." + mapName + "filling-block"));
+        FILLING_BLOCK = Material.getMaterial(findString("Chaos-Sumo." + mapName + ".filling-block"));
 
         return mapName;
     }
@@ -72,10 +72,6 @@ public class ChaosSumoConfig {
         Random rand = new Random();
         int randomIndex = rand.nextInt(mapNames.size());
         return mapNames.get(randomIndex);
-    }
-
-    public static boolean findBoolean(String path) {
-        return plugin.getConfig().getBoolean(path);
     }
 
     public static int findInt(String path) {

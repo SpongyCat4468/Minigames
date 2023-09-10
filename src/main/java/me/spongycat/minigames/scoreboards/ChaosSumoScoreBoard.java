@@ -350,7 +350,7 @@ public class ChaosSumoScoreBoard {
         updateGameScoreBoard();
 
         CommandSender sender = Bukkit.getConsoleSender();
-        String command = "mv gamerule keepInventory true" + ChaosSumoConfig.GAME_WORLD.getName();
+        String command = "mv gamerule keepInventory true " + ChaosSumoConfig.GAME_WORLD.getName();
         Bukkit.dispatchCommand(sender, command);
 
         int minX = ChaosSumoConfig.FIRST_X;

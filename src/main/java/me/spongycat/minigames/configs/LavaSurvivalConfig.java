@@ -30,6 +30,7 @@ public class LavaSurvivalConfig {
     public static List<Integer> REWARD_AMOUNT = findIntList("Lava-Survival.reward-amount");
     public static boolean CAN_PVP = findBoolean("Lava-Survival.pvp-enabled");
     public static boolean DROP_ITEMS_ON_DEATH = findBoolean("Lava-Survival.drop-items-on-death");
+    public static List<String> REWARD_COMMANDS = findStringList("Lava-Survival.reward-commands");
     public static String IP = findString("Lava-Survival.ip");
     private static final List<String> MAP_NAMES = findStringList("Lava-Survival.map-names");
 

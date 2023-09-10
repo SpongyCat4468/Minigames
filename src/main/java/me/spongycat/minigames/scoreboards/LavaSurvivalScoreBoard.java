@@ -543,6 +543,18 @@ public class LavaSurvivalScoreBoard {
             winner.getInventory().addItem(itemStack);
         }
 
+        for (String config : LavaSurvivalConfig.REWARD_COMMANDS) {
+            boolean isEmpty = config.isEmpty() || config.isBlank();
+            if (!isEmpty) {
+                String playerName = winner.getName();
+
+                // Replace %player% with the actual player's name
+                String command = config.replace("%player%", playerName);
+
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            }
+        }
+
         Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + "The winner of the lava survival is: " + ChatColor.BOLD + winner.getDisplayName() + ChatColor.RESET+ "!");
         playerInGame.clear();
         playersParticipate.clear();

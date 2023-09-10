@@ -32,7 +32,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <outputDirectory>C:\Users\Sean\Downloads\test_server\plugins</outputDirectory>
+                    <outputDirectory>C:\Users\Sean\AppData\Roaming\.feather\player-server\servers\dcc7ce8d-f01b-4680-a1c6-b25249c009d3\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

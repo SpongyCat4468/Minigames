@@ -1,5 +1,6 @@
 package me.spongycat.minigames.listeners;
 
+import me.spongycat.minigames.GUIs.MinigamesGUI;
 import me.spongycat.minigames.configs.LavaSurvivalConfig;
 import me.spongycat.minigames.scoreboards.LavaSurvivalScoreBoard;
 import org.bukkit.ChatColor;
@@ -32,12 +33,7 @@ public class MinigamesGUIListener implements Listener {
 
         final Player p = (Player) e.getWhoClicked();
 
-        ItemStack lava_bucket = new ItemStack(Material.LAVA_BUCKET);
-        ItemMeta itemMeta = lava_bucket.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GOLD + "Lava Survival");
-        lava_bucket.setItemMeta(itemMeta);
-
-        if (clickedItem.isSimilar(lava_bucket)) {
+        if (clickedItem.isSimilar(MinigamesGUI.lava_bucket)) {
             boolean isLobbyFull = LavaSurvivalScoreBoard.currentPlayersWaiting == LavaSurvivalConfig.MAX_PLAYER;
             if (!isLobbyFull) {
                 World lobby = LavaSurvivalConfig.LOBBY;

@@ -5,6 +5,7 @@ import me.spongycat.minigames.configs.LavaSurvivalConfig;
 import me.spongycat.minigames.scoreboards.ChaosSumoScoreBoard;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -30,8 +31,8 @@ public class ChaosSumoListener implements Listener {
     @EventHandler
     public void onPlayerPVP(EntityDamageByEntityEvent e) {
         // Check if the damage is caused by a player attacking another player
-        if (e.getDamager() instanceof org.bukkit.entity.Player &&
-                e.getEntity() instanceof org.bukkit.entity.Player) {
+        if (e.getDamager() instanceof Player &&
+                e.getEntity() instanceof Player) {
             if (e.getDamager().getWorld().equals(LavaSurvivalConfig.LOBBY)) {
                 e.setCancelled(true);
             }

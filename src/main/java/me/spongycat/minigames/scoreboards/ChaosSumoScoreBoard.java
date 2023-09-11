@@ -177,7 +177,7 @@ public class ChaosSumoScoreBoard {
     }
     public static void removeScore(Player player, String scoreName) {
         Scoreboard scoreboard = player.getScoreboard();
-        Objective objective = scoreboard.getObjective("Lava_Survival_Scoreboard"); // Replace with your objective name
+        Objective objective = scoreboard.getObjective("Chaos_Sumo_Scoreboard"); // Replace with your objective name
 
         if (objective != null) {
             Score score = objective.getScore(scoreName);
@@ -202,7 +202,7 @@ public class ChaosSumoScoreBoard {
 
     public static void addScore(Player player, String scoreName) {
         Scoreboard scoreboard = player.getScoreboard();
-        Objective objective = scoreboard.getObjective("Lava_Survival_Scoreboard"); // Replace with your objective name
+        Objective objective = scoreboard.getObjective("Chaos_Sumo_Scoreboard"); // Replace with your objective name
 
         if (objective != null) {
             Score score = objective.getScore(scoreName);
@@ -210,7 +210,7 @@ public class ChaosSumoScoreBoard {
         }
     }
     public static void addGameScore(Player player, String scoreName) {
-        Objective objective = player.getScoreboard().getObjective("Lava_Survival_Game_Scoreboard");
+        Objective objective = player.getScoreboard().getObjective("Chaos_Sumo_Game_Scoreboard");
         if (objective != null) {
             Score score = objective.getScore(scoreName);
             score.setScore(3);
